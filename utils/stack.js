@@ -1,27 +1,65 @@
+/**
+ * @class Stack
+ * @description A stack data structure implementation for integer operations
+ * @example
+ * const stack = new Stack();
+ * stack.push([1, 2, 3]); // Adds numbers to stack
+ * stack.pop(2); // Returns [3, 2]
+ */
 
-const stack = [];
+class Stack {
+    /**
+     * Creates a new Stack instance
+     * @constructor
+     */
+    constructor() {
+        /** @private @type {number[]} */
+        this._items = [];
+    }
 
-function pushArgs(args) {
-    if (!Array.isArray(args)) {
-        throw "Invalid or missing 'arguments' array";
+    /**
+     * @description Pushes multiple integers onto the stack
+     * @param {number[]} args - Array of integers to push
+     * @throws {string} If args is not an array or contains non-integers
+     */
+    push(args) {
+        if (!Array.isArray(args)) {
+            throw "Invalid or missing 'arguments' array";
+        }
+        if (args.some(arg => !Number.isInteger(arg))) {
+            throw "All arguments must be integers";
+        }
+        this._items.push(...args);
     }
-    if (args.some(arg => !Number.isInteger(arg))) {
-        throw "All arguments must be integers";
+
+    /**
+     * @description Removes and returns multiple items from the top of the stack
+     * @param {number} count - Number of items to remove
+     * @returns {number[]} Array of removed items in reverse order
+     * @throws {string} If count is invalid or larger than stack size
+     */
+    pop(count) {
+        const size = this._items.length;
+        if (!Number.isInteger(count) || count < 0 || count > size) {
+            throw `Error: cannot remove ${count} from the stack. It has only ${size} arguments`;
+        }
+        return this._items.splice(-count).reverse();
     }
-    stack.push(...args);
+
+    /**
+     * @description Gets the current number of items in the stack
+     * @returns {number} Stack size
+     */
+    size() {
+        return this._items.length;
+    }
+
+    /**
+     * @description Removes all items from the stack
+     */
+    clear() {
+        this._items.length = 0;
+    }
 }
 
-function popArgs(count) {
-
-    const size = stack.length;
-    if (!Number.isInteger(count) || count < 0 || count > size) {
-        throw `Error: cannot remove ${count} from the stack. It has only ${size} arguments`;
-    }
-    return stack.splice(-count).reverse();
-}
-
-function size() {
-    return stack.length;
-}
-
-module.exports = { pushArgs, popArgs, size };
+module.exports = new Stack();  // Singleton instance

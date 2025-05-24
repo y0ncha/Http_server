@@ -57,7 +57,7 @@ exports.independentCalculate = (req, res) => {
             return res.status(409).json({ errorMessage: `Error: Too many arguments to perform the operation ${op}` });
         }
         const result = operations.perform(opKey, args);
-        history.addAction('INDEPENDENT', opKey, args, result);
+        history.addAction('INDEPENDENT', op, args, result);
         res.status(200).json({ result });
     } catch (error) {
         res.status(409).json({ errorMessage: error });
@@ -116,7 +116,7 @@ exports.stackCalculate = (req, res) => {
     try {
         const args = operands.pop(opEntry.arity);
         const result = operations.perform(opKey, args);
-        history.addAction('STACK', opKey, args, result);
+        history.addAction('STACK', op, args, result);
         res.status(200).json({ result });
     } catch (error) {
         res.status(409).json({ errorMessage: String(error) });

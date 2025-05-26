@@ -10,8 +10,32 @@ const app = express();
 const PORT = 8496;
 
 // Routes
+
+/**
+ * @constant {Router | {}} stackRoutes - Routes for stack-based calculator operations
+ * @description This module handles operations that involve a stack-based approach to calculations.
+ * @type {Router | {}}
+ * @requires ./routes/stack
+ * @see ./routes/stack
+ */
 const stackRoutes = require('./routes/stack');
+
+/**
+ * @constant {Router | {}} independentRoutes - Routes for independent.log calculator operations
+ * @description This module handles operations that do not depend on a stack, such as basic arithmetic.
+ * @type {Router | {}}
+ * @requires ./routes/independent.log
+ * @see ./routes/independent.log
+ */
 const independentRoutes = require('./routes/independent');
+
+/**
+ * @constant {Router | {}} historyRoutes - Routes for calculator history operations
+ * @description This module manages the history of calculations performed by the calculator.
+ * @type {Router | {}}
+ * @requires ./routes/history
+ * @see ./routes/history
+ */
 const historyRoutes = require('./routes/history');
 
 // Middleware for parsing JSON bodies

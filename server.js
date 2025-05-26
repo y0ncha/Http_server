@@ -4,21 +4,31 @@
  */
 
 const express = require('express');
-const routes = require('./routes/calculator');
+const app = express();
 
 /** @constant {number} PORT - Server port number */
 const PORT = 8496;
 
-const app = express();
+// Routes
+const stackRoutes = require('./routes/stack');
+const independentRoutes = require('./routes/independent');
+const historyRoutes = require('./routes/history');
 
 // Middleware for parsing JSON bodies
 app.use(express.json());
 
+// Mounting routes for calculator operations
+app.use('/calculator', stackRoutes);
+app.use('/calculator', independentRoutes);
+app.use('/calculator', historyRoutes);
+
 /**
- * Mount calculator routes under /calculator path
- * @see module:routes/calculator
+ * @route GET /calculator/health
+ * @description Health check endpoint
  */
-app.use('/calculator', routes);
+app.get('/calculator/health', (req, res) => {
+    res.status(200).send('OK');
+});
 
 /**
  * Start the server

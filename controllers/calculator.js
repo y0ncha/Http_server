@@ -142,15 +142,19 @@ exports.popArgs = (req, res) => {
 
 /**
  * @function fetchHistory
- * @description Retrieves calculation history
+ * @description Retrieves calculation history based on flavor
  * @param {import('express').Request} req - Express request with optional flavor query
  * @param {import('express').Response<CalculatorResponse>} res - Express response
- * @returns {void} Sends history entries
  */
 exports.fetchHistory = (req, res) => {
     const flavor = req.query.flavor;
-    const result = history.fetch(flavor);
-    res.status(200).json({ result });
+    try {
+        const result = history.fetch(flavor);
+        res.status(200).json({ result });
+    }
+    catch (error) {
+        return res.status(409).json({ errorMessage: error });
+    }
 }
 
 /**

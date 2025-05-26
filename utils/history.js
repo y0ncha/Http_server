@@ -34,6 +34,7 @@ function addAction(flavor, op, args, res) {
  * @description Retrieves operation history
  * @param {'STACK'|'INDEPENDENT'|null} [flavor=null] - Filter by calculation type
  * @returns {HistoryEntry[]} Array of history entries
+ * @throws {string} If an unknown flavor is provided
  * @example
  * // Get all history
  * fetch()
@@ -47,8 +48,11 @@ function fetch(flavor = null) {
     if (flavor === 'STACK' || flavor === 'INDEPENDENT') { // If flavor is provided, return the history for that flavor.
         result = history.filter(entry => entry.flavor === flavor);
     }
-    else {  // If flavor is not provided, return the entire history (stack first).
+    else if (!flavor) {  // If flavor is not provided, return the entire history (stack first).
         result = [...history.filter(entry => entry.flavor === 'STACK'),...history.filter(entry => entry.flavor === 'INDEPENDENT')];
+    }
+    else {
+        throw `Error: unknown flavor: ${flavor}`;
     }
     return result;
 }

@@ -8,7 +8,7 @@
 
 const history = require("../utils/history");
 const operations = require("../utils/operations");
-const operands = require("../utils/stack");
+const operands_stack = require("../utils/stack");
 
 /**
  * @typedef {Object} CalculatorResponse
@@ -72,7 +72,7 @@ exports.independentCalculate = (req, res) => {
  * @returns {void} Sends stack size
  */
 exports.getStackSize = (req, res) => {
-    res.status(200).json({ result: operands.size() });
+    res.status(200).json({ result: operands_stack.size() });
 }
 
 /**
@@ -85,8 +85,8 @@ exports.getStackSize = (req, res) => {
 exports.pushArgs = (req, res) => {
     try {
         const args = req.body.arguments;
-        operands.push(args);
-        res.status(200).json({ result: operands.size() });
+        operands_stack.push(args);
+        res.status(200).json({ result: operands_stack.size() });
     }
     catch (error) {
         res.status(409).json({ errorMessage: error });
@@ -109,12 +109,12 @@ exports.stackCalculate = (req, res) => {
     if (!opEntry) {
         return res.status(409).json({ errorMessage: `Error: unknown operation: ${op}` });
     }
-    if (opEntry.arity > operands.size()) {
-        return res.status(409).json({ errorMessage: `Error: cannot implement operation ${op}. It requires ${opEntry.arity} arguments and the stack has only ${operands.size()} arguments` });
+    if (opEntry.arity > operands_stack.size()) {
+        return res.status(409).json({ errorMessage: `Error: cannot implement operation ${op}. It requires ${opEntry.arity} arguments and the stack has only ${operands_stack.size()} arguments` });
     }
 
     try {
-        const args = operands.pop(opEntry.arity);
+        const args = operands_stack.pop(opEntry.arity);
         const result = operations.perform(opKey, args);
         history.addAction('STACK', op, args, result);
         res.status(200).json({ result });
@@ -133,8 +133,8 @@ exports.stackCalculate = (req, res) => {
 exports.popArgs = (req, res) => {
     const count = req.query.count;
     try {
-        operands.pop(count);
-        res.status(200).json({ result: operands.size() });
+        operands_stack.pop(count);
+        res.status(200).json({ result: operands_stack.size() });
     } catch (error) {
         res.status(409).json({ errorMessage: error });
     }

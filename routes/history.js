@@ -1,5 +1,5 @@
 /**
- * @module routes/stack
+ * @module routes/history
  * @description Express router configuration for stack-related calculator endpoints
  * @requires express
  * @requires ../controllers/calculator

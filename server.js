@@ -3,14 +3,18 @@
  * @description Express server setup for calculator application
  */
 
+
+/****** IMPORTS ******/
 const express = require('express');
+const logReq = require('./middleware/requests'); // Middleware to log requests
+
+
+/****** CONFIG ******/
+const PORT = 8496;
 const app = express();
 
-/** @constant {number} PORT - Server port number */
-const PORT = 8496;
 
-// Routes
-
+/****** ROUTS ******/
 /**
  * @constant {Router | {}} stackRoutes - Routes for stack-based calculator operations
  * @description This module handles operations that involve a stack-based approach to calculations.
@@ -19,6 +23,7 @@ const PORT = 8496;
  * @see ./routes/stack
  */
 const stackRoutes = require('./routes/stack');
+app.use('/calculator', stackRoutes);
 
 /**
  * @constant {Router | {}} independentRoutes - Routes for independent.log calculator operations
@@ -28,6 +33,7 @@ const stackRoutes = require('./routes/stack');
  * @see ./routes/independent.log
  */
 const independentRoutes = require('./routes/independent');
+app.use('/calculator', independentRoutes);
 
 /**
  * @constant {Router | {}} historyRoutes - Routes for calculator history operations
@@ -37,27 +43,22 @@ const independentRoutes = require('./routes/independent');
  * @see ./routes/history
  */
 const historyRoutes = require('./routes/history');
-
-// Middleware for parsing JSON bodies
-app.use(express.json());
-
-// Mounting routes for calculator operations
-app.use('/calculator', stackRoutes);
-app.use('/calculator', independentRoutes);
 app.use('/calculator', historyRoutes);
 
-/**
- * @route GET /calculator/health
- * @description Health check endpoint
- */
-app.get('/calculator/health', (req, res) => {
-    res.status(200).send('OK');
-});
 
-/**
- * Start the server
- * @listens {number} PORT
- */
+/****** MIDDLEWARE ******/
+app.use(express.json());
+app.use(logReq); // Middleware to log requests
+
+
+/****** START SERVER ******/
+
+// Start the server and listen on the specified port
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
+});
+
+// Health check endpoint to verify server status
+app.get('/calculator/health', (req, res) => {
+    res.status(200).send('OK');
 });

@@ -14,6 +14,9 @@ if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
 }
 
+// Logging level configuration
+let LOG_LEVEL = 'debug';
+
 // Define '{date-time} {log-level}: {log-message} | request #{request-number}' as the standard log format
 const layout = {
     type: 'pattern',
@@ -26,25 +29,29 @@ loggers.configure({
         request: { type: 'file', filename: 'logs/requests.log', layout: layout },
         stack: { type: 'file', filename: 'logs/stack.log', layout: layout},
         independent: { type: 'file', filename: 'logs/independent.log', layout: layout },
-        console: { type: 'console' }
+        console: { type: 'console', layout: layout}
     },
     categories: {
-        default: { appenders: ['console'], level: 'info' },
+        // Default logger configuration
+        default: {
+            appenders: ['console'],
+            level: LOG_LEVEL || 'info'
+        },
 
         // In charge of logging each incoming request of any type to the server
         'request-logger': {
             appenders: ['request', 'console'],
-            level: 'debug'
+            level: LOG_LEVEL || 'debug'
         },
         // In charge of logging information on all the stack behavior
         'stack-logger': {
             appenders: ['stack'],
-            level: 'info'
+            level: LOG_LEVEL || 'info'
         },
         // In charge of logging information on all the independent behavior
         'independent-logger': {
             appenders: ['independent'],
-            level: 'info'
+            level: LOG_LEVEL || 'info'
         }
     }
 });

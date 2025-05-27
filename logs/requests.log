@@ -1,0 +1,66 @@
+27-05-2025 HH:13:07.448 INFO: Incoming request | #1 | resource: /calculator/health | HTTP Verb GET | request #1
+27-05-2025 HH:13:07.466 DEBUG: request 1 duration: 19ms | request #1
+27-05-2025 HH:13:07.480 INFO: Incoming request | #2 | resource: /calculator/stack/size | HTTP Verb GET | request #2
+27-05-2025 HH:13:07.481 DEBUG: request 2 duration: 1ms | request #2
+27-05-2025 HH:13:07.535 INFO: Incoming request | #3 | resource: /calculator/stack/arguments | HTTP Verb PUT | request #3
+27-05-2025 HH:13:07.536 DEBUG: request 3 duration: 1ms | request #3
+27-05-2025 HH:13:07.549 INFO: Incoming request | #4 | resource: /calculator/stack/operate?operation=ABS | HTTP Verb GET | request #4
+27-05-2025 HH:13:07.550 DEBUG: request 4 duration: 1ms | request #4
+27-05-2025 HH:13:07.564 INFO: Incoming request | #5 | resource: /calculator/stack/size | HTTP Verb GET | request #5
+27-05-2025 HH:13:07.565 DEBUG: request 5 duration: 0ms | request #5
+27-05-2025 HH:13:07.576 INFO: Incoming request | #6 | resource: /calculator/stack/operate?operation=POW | HTTP Verb GET | request #6
+27-05-2025 HH:13:07.577 DEBUG: request 6 duration: 1ms | request #6
+27-05-2025 HH:13:07.589 INFO: Incoming request | #7 | resource: /calculator/stack/arguments | HTTP Verb PUT | request #7
+27-05-2025 HH:13:07.590 DEBUG: request 7 duration: 1ms | request #7
+27-05-2025 HH:13:07.601 INFO: Incoming request | #8 | resource: /calculator/stack/operate?operation=POW | HTTP Verb GET | request #8
+27-05-2025 HH:13:07.602 DEBUG: request 8 duration: 1ms | request #8
+27-05-2025 HH:13:07.623 INFO: Incoming request | #9 | resource: /calculator/stack/arguments?count=1 | HTTP Verb DELETE | request #9
+27-05-2025 HH:13:07.631 DEBUG: request 9 duration: 8ms | request #9
+27-05-2025 HH:13:07.673 INFO: Incoming request | #10 | resource: /calculator/independent/calculate | HTTP Verb POST | request #10
+27-05-2025 HH:13:07.674 DEBUG: request 10 duration: 1ms | request #10
+27-05-2025 HH:13:07.692 INFO: Incoming request | #11 | resource: /calculator/history?flavor=INDEPENDENT | HTTP Verb GET | request #11
+27-05-2025 HH:13:07.693 DEBUG: request 11 duration: 1ms | request #11
+27-05-2025 HH:14:51.890 INFO: Incoming request | #12 | resource: /calculator/health | HTTP Verb GET | request #12
+27-05-2025 HH:14:51.893 DEBUG: request 12 duration: 3ms | request #12
+27-05-2025 HH:14:51.922 INFO: Incoming request | #13 | resource: /calculator/stack/size | HTTP Verb GET | request #13
+27-05-2025 HH:14:51.923 DEBUG: request 13 duration: 1ms | request #13
+27-05-2025 HH:14:51.951 INFO: Incoming request | #14 | resource: /calculator/stack/arguments | HTTP Verb PUT | request #14
+27-05-2025 HH:14:51.952 DEBUG: request 14 duration: 2ms | request #14
+27-05-2025 HH:14:51.964 INFO: Incoming request | #15 | resource: /calculator/stack/operate?operation=ABS | HTTP Verb GET | request #15
+27-05-2025 HH:14:51.965 DEBUG: request 15 duration: 1ms | request #15
+27-05-2025 HH:14:51.976 INFO: Incoming request | #16 | resource: /calculator/stack/size | HTTP Verb GET | request #16
+27-05-2025 HH:14:51.977 DEBUG: request 16 duration: 1ms | request #16
+27-05-2025 HH:14:51.986 INFO: Incoming request | #17 | resource: /calculator/stack/operate?operation=POW | HTTP Verb GET | request #17
+27-05-2025 HH:14:51.986 DEBUG: request 17 duration: 0ms | request #17
+27-05-2025 HH:14:51.999 INFO: Incoming request | #18 | resource: /calculator/stack/arguments | HTTP Verb PUT | request #18
+27-05-2025 HH:14:51.999 DEBUG: request 18 duration: 0ms | request #18
+27-05-2025 HH:14:52.014 INFO: Incoming request | #19 | resource: /calculator/stack/operate?operation=POW | HTTP Verb GET | request #19
+27-05-2025 HH:14:52.015 DEBUG: request 19 duration: 1ms | request #19
+27-05-2025 HH:14:52.027 INFO: Incoming request | #20 | resource: /calculator/stack/arguments?count=1 | HTTP Verb DELETE | request #20
+27-05-2025 HH:14:52.030 DEBUG: request 20 duration: 3ms | request #20
+27-05-2025 HH:14:52.084 INFO: Incoming request | #21 | resource: /calculator/independent/calculate | HTTP Verb POST | request #21
+27-05-2025 HH:14:52.086 DEBUG: request 21 duration: 2ms | request #21
+27-05-2025 HH:14:52.102 INFO: Incoming request | #22 | resource: /calculator/history?flavor=INDEPENDENT | HTTP Verb GET | request #22
+27-05-2025 HH:14:52.103 DEBUG: request 22 duration: 1ms | request #22
+27-05-2025 HH:15:02.509 INFO: Incoming request | #1 | resource: /calculator/health | HTTP Verb GET | request #1
+27-05-2025 HH:15:02.515 DEBUG: request #1 duration: 6ms | request #1
+27-05-2025 HH:15:02.533 INFO: Incoming request | #2 | resource: /calculator/stack/size | HTTP Verb GET | request #2
+27-05-2025 HH:15:02.533 DEBUG: request #2 duration: 0ms | request #2
+27-05-2025 HH:15:02.564 INFO: Incoming request | #3 | resource: /calculator/stack/arguments | HTTP Verb PUT | request #3
+27-05-2025 HH:15:02.565 DEBUG: request #3 duration: 1ms | request #3
+27-05-2025 HH:15:02.576 INFO: Incoming request | #4 | resource: /calculator/stack/operate?operation=ABS | HTTP Verb GET | request #4
+27-05-2025 HH:15:02.577 DEBUG: request #4 duration: 1ms | request #4
+27-05-2025 HH:15:02.590 INFO: Incoming request | #5 | resource: /calculator/stack/size | HTTP Verb GET | request #5
+27-05-2025 HH:15:02.590 DEBUG: request #5 duration: 0ms | request #5
+27-05-2025 HH:15:02.602 INFO: Incoming request | #6 | resource: /calculator/stack/operate?operation=POW | HTTP Verb GET | request #6
+27-05-2025 HH:15:02.602 DEBUG: request #6 duration: 0ms | request #6
+27-05-2025 HH:15:02.615 INFO: Incoming request | #7 | resource: /calculator/stack/arguments | HTTP Verb PUT | request #7
+27-05-2025 HH:15:02.616 DEBUG: request #7 duration: 1ms | request #7
+27-05-2025 HH:15:02.627 INFO: Incoming request | #8 | resource: /calculator/stack/operate?operation=POW | HTTP Verb GET | request #8
+27-05-2025 HH:15:02.627 DEBUG: request #8 duration: 0ms | request #8
+27-05-2025 HH:15:02.640 INFO: Incoming request | #9 | resource: /calculator/stack/arguments?count=1 | HTTP Verb DELETE | request #9
+27-05-2025 HH:15:02.641 DEBUG: request #9 duration: 1ms | request #9
+27-05-2025 HH:15:02.654 INFO: Incoming request | #10 | resource: /calculator/independent/calculate | HTTP Verb POST | request #10
+27-05-2025 HH:15:02.654 DEBUG: request #10 duration: 0ms | request #10
+27-05-2025 HH:15:02.667 INFO: Incoming request | #11 | resource: /calculator/history?flavor=INDEPENDENT | HTTP Verb GET | request #11
+27-05-2025 HH:15:02.667 DEBUG: request #11 duration: 0ms | request #11

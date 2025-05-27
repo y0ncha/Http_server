@@ -10,6 +10,12 @@ const router = express.Router();
 const controller = require('../controllers/general');
 
 /**
+ * @route GET /calculator/health
+ * @description Health check endpoint
+ */
+router.get('/health', controller.health);
+
+/**
  * @route GET /calculator/history
  * @description Get calculation history
  * @query {string} [flavor] - Filter by 'STACK' or 'INDEPENDENT'

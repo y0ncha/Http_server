@@ -13,6 +13,9 @@ const logReq = require('./middleware/requests'); // Middleware to log requests
 const PORT = 8496;
 const app = express();
 
+/****** MIDDLEWARE ******/
+app.use(express.json());
+app.use(logReq); // Middleware to log requests
 
 /****** ROUTS ******/
 /**
@@ -29,35 +32,25 @@ app.use('/calculator', stackRoutes);
  * @constant {Router | {}} independentRoutes - Routes for independent.log calculator operations
  * @description This module handles operations that do not depend on a stack, such as basic arithmetic.
  * @type {Router | {}}
- * @requires ./routes/independent.log
- * @see ./routes/independent.log
+ * @requires ./routes/independent
+ * @see ./routes/independent
  */
 const independentRoutes = require('./routes/independent');
 app.use('/calculator', independentRoutes);
 
 /**
- * @constant {Router | {}} historyRoutes - Routes for calculator history operations
- * @description This module manages the history of calculations performed by the calculator.
+ * @constant {Router | {}} generalRoutes - General routes for calculator operations
+ * @description This module handles general operations such as health checks and history management.
  * @type {Router | {}}
- * @requires ./routes/history
- * @see ./routes/history
+ * @requires ./routes/general
+ * @see ./routes/general
  */
-const historyRoutes = require('./routes/history');
-app.use('/calculator', historyRoutes);
+const generalRoutes = require('./routes/general');
+app.use('/calculator', generalRoutes);
 
 
-/****** MIDDLEWARE ******/
-app.use(express.json());
-app.use(logReq); // Middleware to log requests
-
-
-/****** START SERVER ******/
+/****** INIT SERVER ******/
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-});
-
-// Health check endpoint to verify server status
-app.get('/calculator/health', (req, res) => {
-    res.status(200).send('OK');
 });

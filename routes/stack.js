@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
-const controller = require('../controllers/calculator');
+const controller = require('../controllers/stack');
 
 /**
  * @route GET /calculator/stack/size

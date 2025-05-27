@@ -52,7 +52,6 @@ app.use(logReq); // Middleware to log requests
 
 
 /****** START SERVER ******/
-
 // Start the server and listen on the specified port
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

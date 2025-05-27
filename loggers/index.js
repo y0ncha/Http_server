@@ -14,9 +14,6 @@ if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
 }
 
-// Logging level configuration
-let LOG_LEVEL = 'debug';
-
 // Define '{date-time} {log-level}: {log-message} | request #{request-number}' as the standard log format
 const layout = {
     type: 'pattern',
@@ -35,23 +32,23 @@ loggers.configure({
         // Default logger configuration
         default: {
             appenders: ['console'],
-            level: LOG_LEVEL || 'info'
+            level: 'info'
         },
 
         // In charge of logging each incoming request of any type to the server
         'request-logger': {
             appenders: ['request', 'console'],
-            level: LOG_LEVEL || 'debug'
+            level: 'info'
         },
         // In charge of logging information on all the stack behavior
         'stack-logger': {
             appenders: ['stack'],
-            level: LOG_LEVEL || 'info'
+            level: 'info'
         },
         // In charge of logging information on all the independent behavior
         'independent-logger': {
             appenders: ['independent'],
-            level: LOG_LEVEL || 'info'
+            level: 'debug'
         }
     }
 });
@@ -62,22 +59,17 @@ loggers.configure({
  * @constant {Logger} requestLogger
  * @description In charge of logging each incoming request of any type to the server
  */
-const requestLogger = loggers.getLogger('request-logger');
+exports.requestLogger = loggers.getLogger('request-logger');
 
 /**
  * @constant {Logger} stackLogger
  * @description In charge of logging information on all the stack behavior
  */
-const stackLogger = loggers.getLogger('stack-logger');
+exports.stackLogger = loggers.getLogger('stack-logger');
 
 /**
  * @constant {Logger} independentLogger
  * @description In charge of logging information on all the independent behavior
  */
-const independentLogger = loggers.getLogger('independent-logger');
+exports.independentLogger = loggers.getLogger('independent-logger');
 
-module.exports = {
-    requestLogger,
-    stackLogger,
-    independentLogger
-};

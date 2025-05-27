@@ -1,6 +1,6 @@
 /**
  * @module request
- * @description Logs incoming requests and their durations (INFO + DEBUG)
+ * @description Logs incoming requests and their durations (info + DEBUG)
  * @requires loggers
  */
 

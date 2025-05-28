@@ -82,8 +82,9 @@ exports.stackCalculate = (req, res) => {
  */
 exports.popArgs = (req, res) => {
     try {
-        const count = req.query.count;
+        const count = Number(req.query.count);
         stack.pop(count);
+        stackLogger.info(`Removing total ${count} argument(s) from the stack | Stack size: ${stack.size()}`)
         res.status(200).json({ result: stack.size() });
     } catch (error) {
         res.status(409).json({ errorMessage: error });

@@ -74,22 +74,22 @@ loggers.configure({
  * @constant {Logger} requestLogger
  * @description In charge of logging each incoming request of any type to the server
  */
-exports.requestLogger = loggers.getLogger('request-logger');
+const requestLogger = loggers.getLogger('request-logger');
 
 /**
  * @constant {Logger} stackLogger
  * @description In charge of logging information on all the stack behavior
  */
-exports.stackLogger = loggers.getLogger('stack-logger');
+const stackLogger = loggers.getLogger('stack-logger');
 
 /**
  * @constant {Logger} independentLogger
  * @description In charge of logging information on all the independent behavior
  */
-exports.independentLogger = loggers.getLogger('independent-logger');
+const independentLogger = loggers.getLogger('independent-logger');
 
-// module.exports = {
-//     requestLogger,
-//     stackLogger,
-//     independentLogger,
-// }
+module.exports = {
+    requestLogger,
+    stackLogger,
+    independentLogger,
+}

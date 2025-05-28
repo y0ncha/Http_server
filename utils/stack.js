@@ -13,7 +13,6 @@ class Stack {
      * @constructor
      */
     constructor() {
-        /** @public */
         this._items = [];
     }
 

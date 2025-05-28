@@ -31,30 +31,18 @@ function addAction(flavor, op, args, res) {
 }
 
 /**
- * @description Retrieves operation history
- * @param {'STACK'|'INDEPENDENT'|null} [flavor=null] - Filter by calculation type
- * @returns {HistoryEntry[]} Array of history entries
- * @throws {string} If an unknown flavor is provided
- * @example
- * // Get all history
- * fetch()
- * // Get only stack operations
- * fetch('STACK')
+ * @description Retrieves operation history for a given flavor
+ * @param {string} flavor - Type of calculation (e.g. 'STACK', 'INDEPENDENT', or others)
+ * @returns {HistoryEntry[]} Array of history entries matching the flavor
  */
-function fetch(flavor = null) {
+function fetch(flavor= null) {
 
-    let result;
-
-    if (flavor === 'STACK' || flavor === 'INDEPENDENT') { // If flavor is provided, return the history for that flavor.
-        result = history.filter(entry => entry.flavor === flavor);
-    }
-    else if (!flavor) {  // If flavor is not provided, return the entire history (stack first).
-        result = [...history.filter(entry => entry.flavor === 'STACK'),...history.filter(entry => entry.flavor === 'INDEPENDENT')];
+    if (flavor === null) {
+        return history;
     }
     else {
-        throw `Error: unknown flavor: ${flavor}`;
+        return history.filter(entry => entry.flavor === flavor);
     }
-    return result;
 }
 
 /**

@@ -60,7 +60,7 @@ loggers.configure({
         // In charge of logging information on all the stack behavior
         'stack-logger': {
             appenders: ['stack'],
-            level: 'debug'
+            level: 'info'
         },
         // In charge of logging information on all the independent behavior
         'independent-logger': {

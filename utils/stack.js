@@ -13,7 +13,7 @@ class Stack {
      * @constructor
      */
     constructor() {
-        /** @private @type {number[]} */
+        /** @public */
         this._items = [];
     }
 
@@ -52,6 +52,14 @@ class Stack {
      */
     size() {
         return this._items.length;
+    }
+
+    /**
+     * @description Gets the current items in the stack as a string
+     * @returns {string} Array of items in the stack
+     */
+    stringify() {
+        return `${this._items.join(', ')}`;
     }
 
     /**

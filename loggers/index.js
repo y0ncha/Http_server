@@ -2,6 +2,8 @@
  * @module loggers
  * @description Initializes and exports all loggers using log4js
  * @requires log4js
+ * @requires fs
+ * @requires path
  */
 
 const loggers = require('log4js');
@@ -14,7 +16,7 @@ if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
 }
 
-// Define '{date-time} {log-level}: {log-message} | request #{request-number}' as the standard log format
+// Define '{date-time} {log-level}:' layout
 const layout = {
     type: 'pattern',
     pattern: '%d{dd-MM-yyyy HH:mm:ss.SSS} %p: %m'
@@ -23,10 +25,25 @@ const layout = {
 // Configure log4js with multiple appenders and logger categories
 loggers.configure({
     appenders: {
-        request: { type: 'file', filename: 'logs/requests.log', layout: layout },
-        stack: { type: 'file', filename: 'logs/stack.log', layout: layout},
-        independent: { type: 'file', filename: 'logs/independent.log', layout: layout },
-        console: { type: 'console', layout: layout}
+        request: {
+            type: 'file',
+            filename: 'logs/requests.log',
+            layout: layout
+        },
+        stack: {
+            type: 'file',
+            filename: 'logs/stack.log',
+            layout: layout
+        },
+        independent: {
+            type: 'file',
+            filename: 'logs/independent.log',
+            layout: layout
+        },
+        console: {
+            type: 'console',
+            layout: layout
+        }
     },
     categories: {
         // Default logger configuration
@@ -43,7 +60,7 @@ loggers.configure({
         // In charge of logging information on all the stack behavior
         'stack-logger': {
             appenders: ['stack'],
-            level: 'info'
+            level: 'debug'
         },
         // In charge of logging information on all the independent behavior
         'independent-logger': {
@@ -52,8 +69,6 @@ loggers.configure({
         }
     }
 });
-
-// Export initialized loggers
 
 /**
  * @constant {Logger} requestLogger
@@ -73,3 +88,8 @@ exports.stackLogger = loggers.getLogger('stack-logger');
  */
 exports.independentLogger = loggers.getLogger('independent-logger');
 
+// module.exports = {
+//     requestLogger,
+//     stackLogger,
+//     independentLogger,
+// }

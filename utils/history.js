@@ -1,67 +1,61 @@
 /**
  * @module history
- * @description Module for tracking calculator operations history
+ * @description Module for tracking calculator operations history by flavor
  */
 
 /**
  * @typedef {Object} HistoryEntry
- * @property {'STACK'|'INDEPENDENT'} flavor - Type of calculation performed
  * @property {string} operation - Name of the operation
  * @property {number[]} arguments - Arguments used in the operation
  * @property {number} result - Result of the operation
  */
 
-/** @type {HistoryEntry[]} */
-const history = [];
-
-/**
- * @description Logs an operation to the history
- * @param {'STACK'|'INDEPENDENT'} flavor - Type of calculation
- * @param {string} op - Operation name
- * @param {number[]} args - Arguments used
- * @param {number} res - Operation result
- */
-function addAction(flavor, op, args, res) {
-    history.push({
-        flavor: flavor,
-        operation: op,
-        arguments: args,
-        result: res
-    });
-}
-
-/**
- * @description Retrieves operation history for a given flavor
- * @param {string} flavor - Type of calculation (e.g. 'STACK', 'INDEPENDENT', or others)
- * @returns {HistoryEntry[]} Array of history entries matching the flavor
- */
-function fetch(flavor= null) {
-
-    if (flavor === null) {
-        return history;
+class History {
+    constructor(flavor) {
+        /** @type {HistoryEntry[]} */
+        this.entries = [];
+        this.flavor = flavor;
     }
-    else {
-        return history.filter(entry => entry.flavor === flavor);
+
+    /**
+     * @description Logs an operation
+     * @param {string} op - Operation name
+     * @param {number[]} args - Arguments used
+     * @param {number} res - Operation result
+     */
+    addAction(op, args, res) {
+        this.entries.push({ flavor: this.flavor, operation: op, arguments: args, result: res });
+    }
+
+    /**
+     * @description Retrieves the history
+     * @returns {HistoryEntry[]}
+     */
+    fetch() {
+        return [...this.entries];
+    }
+
+    /**
+     * @description Clears all history entries
+     */
+    clear() {
+        this.entries.length = 0;
+    }
+
+    /**
+     * @description Returns the length of the history
+     * @returns {number}
+     */
+    length() {
+        return this.entries.length;
     }
 }
 
-/**
- * @description Clears all history entries
- */
-function clear() {
-    history.length = 0;
-}
-
-/**
- * @description Clears history
- */
-function size() {
-    return history.length;
-}
+// Export two separate history instances
+const stackHistory = new History('STACK');
+const independentHistory = new History('INDEPENDENT');
 
 module.exports = {
-    addAction,
-    fetch,
-    clear,
-    size
+    stackHistory,
+    independentHistory
 };

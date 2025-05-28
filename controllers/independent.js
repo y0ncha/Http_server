@@ -3,10 +3,12 @@
  * @description Independent (non-stack) calculator operations
  * @requires ../utils/operations
  * @requires ../utils/history
+ * @requires ../loggers
  */
 
 const operations = require('../utils/operations');
-const history = require('../utils/history');
+const {independentHistory: history} = require('../utils/history');
+const { independentLogger: logger } = require('../loggers');
 
 /**
  * @function independentCalculate
@@ -19,20 +21,33 @@ exports.independentCalculate = (req, res) => {
         const opKey = op?.toLowerCase();
         const opEntry = operations.map[opKey];
 
-        if (!opEntry) {
-            return res.status(409).json({ errorMessage: `Error: unknown operation: ${op}` });
+        if (!opEntry) { // check if operation exists
+            const error = `Error: unknown operation: ${op}`;
+            logger.error(`Server encountered an error ! message: ${error}`);
+            return res.status(409).json({ errorMessage: error});
         }
-        if (args.length < opEntry.arity) {
+        if (args.length < opEntry.arity) { // check if enough arguments are provided
+            const error = `Error: Not enough arguments to perform the operation ${op}`;
+            logger.error(`Server encountered an error ! message: ${error}`);
             return res.status(409).json({ errorMessage: `Error: Not enough arguments to perform the operation ${op}` });
         }
-        if (args.length > opEntry.arity) {
-            return res.status(409).json({ errorMessage: `Error: Too many arguments to perform the operation ${op}` });
+        if (args.length > opEntry.arity) { // check if too many arguments are provided
+            const error = `Error: Too many arguments to perform the operation ${op}`;
+            logger.error(`Server encountered an error ! message: ${error}`);
+            return res.status(409).json({ errorMessage: error });
         }
 
         const result = operations.perform(opKey, args);
-        history.addAction('INDEPENDENT', op, args, result);
+        history.addAction(op, args, result);
+
+        logger.info(`Performing operation ${op}. Result is ${result}`);
         res.status(200).json({ result });
-    } catch (error) {
+
+        logger.debug(`Performing operation: ${op}(${args.join(', ')}) = ${result}`);
+
+    }
+    catch (error) {
+        logger.error(`Server encountered an error ! message: ${error}`);
         res.status(409).json({ errorMessage: error });
     }
 };

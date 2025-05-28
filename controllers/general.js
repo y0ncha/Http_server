@@ -5,7 +5,7 @@
  * @requires ../loggers
  */
 
-const history = require('../utils/history');
+const {stackHistory, independentHistory} = require('../utils/history');
 const { stackLogger, independentLogger } = require('../loggers');
 
 /**
@@ -20,29 +20,32 @@ exports.health = (req, res) => {
  * @function fetchHistory
  * @description Retrieves calculation history based on flavor
  */
-
 exports.fetchHistory = (req, res) => {
     const flavor = req.query.flavor;
 
     try {
-        let result;
+        let result = [];
 
-        if (!flavor) {
-            result = [...history.fetch()];
-        }
-        else if (flavor === 'STACK') {
-            result = history.fetch(flavor);
+        if (flavor === 'STACK') {
+            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions`);
+            result = stackHistory.fetch();
         }
         else if (flavor === 'INDEPENDENT') {
-            result = history.fetch(flavor);
+            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions`);
+            result = independentHistory.fetch();
+        }
+        else if (!flavor) {
+            result = [...stackHistory.fetch(), ...independentHistory.fetch()];
+            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions`);
+            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions`);
         }
         else {
-            return res.status(409).json({errorMessage: `Error: unknown flavor: ${flavor}`});
+            return res.status(409).json({ errorMessage: `Error: unknown flavor: ${flavor}` }); // no need to log this
         }
         res.status(200).json({ result });
     }
     catch (error) {
-        res.status(409).json({ errorMessage: error });
+        res.status(409).json({ errorMessage: error }); // no need to log this
     }
 };
 
@@ -51,6 +54,7 @@ exports.fetchHistory = (req, res) => {
  * @description Clears all history entries
  */
 exports.clearHistory = (req, res) => {
-    history.clear();
-    res.status(200).json({ result: history.size() });
+    stackHistory.clear();
+    independentHistory.clear();
+    res.status(200).json({ result: stackHistory.length + independentHistory.length });
 };

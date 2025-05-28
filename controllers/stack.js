@@ -4,24 +4,25 @@
  * @requires ../utils/stack
  * @requires ../utils/operations
  * @requires ../utils/history
+ * @requires ../loggers
  */
 
 const stack = require('../utils/stack');
 const operations = require('../utils/operations');
-const history = require('../utils/history');
-const { stackLogger } = require('../loggers');
+const { stackHistory: history} = require('../utils/history');
+const { stackLogger: logger } = require('../loggers');
 
 /**
  * @function getStackSize
- * @description Returns current stack size
+ * @description Returns current stack length
  */
 exports.getStackSize = (req, res) => {
     const size = stack.size();
 
-    stackLogger.info(`Stack size is ${size}`);
+    logger.info(`Stack size is ${size}`);
 
     res.status(200).json({ result: size });
-    stackLogger.debug( `Stack content (first == top): [${stack.stringify()}]`)
+    logger.debug( `Stack content (first == top): [${stack.stringify()}]`)
 };
 
 /**
@@ -34,12 +35,14 @@ exports.pushArgs = (req, res) => {
         let len = args.length;
         let size = stack.size();
 
-        stackLogger.info(`Adding total of ${len} argument(s) to the stack | Stack size: ${size + len}`);
+        logger.info(`Adding total of ${len} argument(s) to the stack | Stack size: ${size + len}`);
         stack.push(args);
 
         res.status(200).json({ result: stack.size() });
-        stackLogger.debug(`Adding arguments: ${args.join(', ')} | Stack size before ${size} | stack size after ${stack.size()}`);
-    } catch (error) {
+        logger.debug(`Adding arguments: ${args.join(', ')} | Stack size before ${size} | stack size after ${stack.size()}`);
+    }
+    catch (error) {
+        logger.error(`Server encountered an error ! message: ${error}`);
         res.status(409).json({ errorMessage: error });
     }
 };
@@ -54,24 +57,28 @@ exports.stackCalculate = (req, res) => {
     const opEntry = operations.map[opKey];
 
     if (!opEntry) {
-        return res.status(409).json({ errorMessage: `Error: unknown operation: ${op}` });
+        const error = `Error: unknown operation: ${op}`;
+        logger.error(`Server encountered an error ! message: ${error}`);
+        return res.status(409).json({ errorMessage: error });
     }
     if (opEntry.arity > stack.size()) {
-        return res.status(409).json({
-            errorMessage: `Error: cannot implement operation ${op}. It requires ${opEntry.arity} arguments and the stack has only ${stack.size()} arguments`
-        });
+        const error = `Error: cannot implement operation ${op}. It requires ${opEntry.arity} arguments and the stack has only ${stack.size()} arguments`;
+        logger.error(`Server encountered an error ! message: ${error}`);
+        return res.status(409).json({ errorMessage: error });
     }
 
     try {
         const args = stack.pop(opEntry.arity);
         const result = operations.perform(opKey, args);
 
-        stackLogger.info(`Performing operation ${op}. Result is ${result} | stack size: ${stack.size()}`)
-        history.addAction('STACK', op, args, result);
+        logger.info(`Performing operation ${op}. Result is ${result} | stack size: ${stack.size()}`)
+        history.addAction(op, args, result);
 
         res.status(200).json({ result });
-        stackLogger.debug(`Performing operation: ${op}(${args.join(', ')}) = ${result}`)
-    } catch (error) {
+        logger.debug(`Performing operation: ${op}(${args.join(', ')}) = ${result}`)
+    }
+    catch (error) {
+        logger.error(`Server encountered an error ! message: ${error}`);
         res.status(409).json({ errorMessage: String(error) });
     }
 };
@@ -84,9 +91,11 @@ exports.popArgs = (req, res) => {
     try {
         const count = Number(req.query.count);
         stack.pop(count);
-        stackLogger.info(`Removing total ${count} argument(s) from the stack | Stack size: ${stack.size()}`)
+        logger.info(`Removing total ${count} argument(s) from the stack | Stack size: ${stack.size()}`)
         res.status(200).json({ result: stack.size() });
-    } catch (error) {
+    }
+    catch (error) {
+        logger.error(`Server encountered an error ! message: ${error}`);
         res.status(409).json({ errorMessage: error });
     }
 };

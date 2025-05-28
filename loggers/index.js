@@ -28,21 +28,24 @@ loggers.configure({
         request: {
             type: 'file',
             filename: 'logs/requests.log',
-            layout: layout
+            layout: layout,
+            flags: 'w'
         },
         stack: {
             type: 'file',
             filename: 'logs/stack.log',
-            layout: layout
+            layout: layout,
+            flags: 'w'
         },
         independent: {
             type: 'file',
             filename: 'logs/independent.log',
-            layout: layout
+            layout: layout,
+            flags: 'w'
         },
         console: {
             type: 'console',
-            layout: layout
+            layout: layout,
         }
     },
     categories: {
@@ -51,7 +54,6 @@ loggers.configure({
             appenders: ['console'],
             level: 'info'
         },
-
         // In charge of logging each incoming request of any type to the server
         'request-logger': {
             appenders: ['request', 'console'],
@@ -90,6 +92,6 @@ const independentLogger = loggers.getLogger('independent-logger');
 
 module.exports = {
     requestLogger,
-    stackLogger,
+    stackLogger: stackLogger,
     independentLogger,
 }

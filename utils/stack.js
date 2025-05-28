@@ -35,7 +35,7 @@ class Stack {
      * @description Removes and returns multiple items from the top of the stack
      * @param {number} count - Number of items to remove
      * @returns {number[]} Array of removed items in reverse order
-     * @throws {string} If count is invalid or larger than stack size
+     * @throws {string} If count is invalid or larger than stack length
      */
     pop(count) {
         const size = this._items.length;
@@ -47,7 +47,7 @@ class Stack {
 
     /**
      * @description Gets the current number of items in the stack
-     * @returns {number} Stack size
+     * @returns {number} Stack length
      */
     size() {
         return this._items.length;

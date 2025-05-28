@@ -6,7 +6,7 @@
  */
 
 const {stackHistory, independentHistory} = require('../utils/history');
-const { stackLogger, independentLogger } = require('../loggers');
+const { stackLogger, independentLogger, requestLogger } = require('../loggers');
 
 /**
  * @function health
@@ -57,4 +57,59 @@ exports.clearHistory = (req, res) => {
     stackHistory.clear();
     independentHistory.clear();
     res.status(200).json({ result: stackHistory.length + independentHistory.length });
+};
+
+/**
+ * @function getLogLevel
+ * @description Gets the current log level of a logger by name
+ * @query {string} logger-name - The logger name ('stack' or 'independent')
+ */
+exports.getLogLevel = (req, res) => {
+    const name = req.query['logger-name'];
+
+    if (name === 'stack-logger') {
+        res.status(200).json({ level: stackLogger.level.toUpperCase() });
+    }
+    else if (name === 'independent-logger') {
+        res.status(200).json({ level: independentLogger.level.toUpperCase() });
+    }
+    else if (name === 'request-logger') {
+        res.status(200).json({ level: requestLogger.level.toUpperCase() });
+    }
+    else {
+        res.status(409).json({ errorMessage: `Logger '${name}' not found` });
+    }
+};
+
+/**
+ * @function setLogLevel
+ * @description Sets the log level of a logger by name
+ * @query {string} logger-name - The logger name ('stack' or 'independent')
+ * @body {string} level - The new log level (e.g. 'INFO', 'DEBUG')
+ */
+exports.setLogLevel = (req, res) => {
+    const name = req.query['logger-name'];
+    let level = req.query.level;
+
+    // Validate the level input
+    if (!['debug', 'info', 'error'].includes(level.toLowerCase)) {
+        return res.status(409).json({ errorMessage: `Invalid log level: ${level}` });
+    }
+
+    // Normalize the level to lowercase for consistency
+    level = level.toLowerCase();
+
+    if (name === 'stack-logger') {
+        stackLogger.level = level;
+        res.status(200).json({ level: stackLogger.level.toUpperCase() });
+    }
+    else if (name === 'independent-logger') {
+        res.status(200).json({ level: independentLogger.level.toUpperCase() });
+    }
+    else if (name === 'request-logger') {
+        res.status(200).json({ level: requestLogger.level.toUpperCase() });
+    }
+    else {
+        res.status(409).json({ errorMessage: `Logger '${name}' not found` });
+    }
 };

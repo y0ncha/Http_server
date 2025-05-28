@@ -10,8 +10,8 @@ const router = express.Router();
 const controller = require('../controllers/stack');
 
 /**
- * @route GET /calculator/stack/size
- * @description Get current stack size
+ * @route GET /calculator/stack/length
+ * @description Get current stack length
  */
 router.get('/stack/size', controller.getStackSize);
 

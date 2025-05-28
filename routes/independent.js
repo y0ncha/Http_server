@@ -2,7 +2,7 @@
  * @module routes/independent
  * @description Express router configuration for independent.log calculator endpoints
  * @requires express
- * @requires ../controllers/calculator
+ * @requires ../controllers/independent
  */
 
 const express = require('express');

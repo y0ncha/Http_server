@@ -24,7 +24,7 @@ yarn-error.log*
 
 # WebStorm-specific files
 /shelf/
-/workspace.xml
+/.idea/workspace.xml
 /httpRequests/
 /dataSources/
 /dataSources.local.xml

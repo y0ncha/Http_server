@@ -27,17 +27,17 @@ exports.fetchHistory = (req, res) => {
         let result = [];
 
         if (flavor === 'STACK') {
-            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions`);
+            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions | request #${req.id} `);
             result = stackHistory.fetch();
         }
         else if (flavor === 'INDEPENDENT') {
-            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions`);
+            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions | request #${req.id} `);
             result = independentHistory.fetch();
         }
         else if (!flavor) {
             result = [...stackHistory.fetch(), ...independentHistory.fetch()];
-            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions`);
-            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions`);
+            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions | request #${req.id} `);
+            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions | request #${req.id} `);
         }
         else {
             return res.status(409).json({ errorMessage: `Error: unknown flavor: ${flavor}` }); // no need to log this
@@ -68,13 +68,13 @@ exports.getLogLevel = (req, res) => {
     const name = req.query['logger-name'];
 
     if (name === 'stack-logger') {
-        res.status(200).json({ level: stackLogger.level.toUpperCase() });
+        res.status(200).json({ result: stackLogger.level.levelStr });
     }
     else if (name === 'independent-logger') {
-        res.status(200).json({ level: independentLogger.level.toUpperCase() });
+        res.status(200).json({ result: independentLogger.level.levelStr });
     }
     else if (name === 'request-logger') {
-        res.status(200).json({ level: requestLogger.level.toUpperCase() });
+        res.status(200).json({ result: requestLogger.level.levelStr });
     }
     else {
         res.status(409).json({ errorMessage: `Logger '${name}' not found` });
@@ -89,10 +89,10 @@ exports.getLogLevel = (req, res) => {
  */
 exports.setLogLevel = (req, res) => {
     const name = req.query['logger-name'];
-    let level = req.query.level;
+    let level = req.query['logger-level'];
 
     // Validate the level input
-    if (!['debug', 'info', 'error'].includes(level.toLowerCase)) {
+    if (!['DEBUG', 'INFO', 'ERROR'].includes(level)) {
         return res.status(409).json({ errorMessage: `Invalid log level: ${level}` });
     }
 
@@ -101,15 +101,18 @@ exports.setLogLevel = (req, res) => {
 
     if (name === 'stack-logger') {
         stackLogger.level = level;
-        res.status(200).json({ level: stackLogger.level.toUpperCase() });
+        level = stackLogger.level.levelStr;
     }
     else if (name === 'independent-logger') {
-        res.status(200).json({ level: independentLogger.level.toUpperCase() });
+        independentLogger.level = level;
+        level = independentLogger.level.levelStr;
     }
     else if (name === 'request-logger') {
-        res.status(200).json({ level: requestLogger.level.toUpperCase() });
+        requestLogger.level = level;
+        level = requestLogger.level.levelStr;
     }
-    else {
-        res.status(409).json({ errorMessage: `Logger '${name}' not found` });
+    else { // If the logger name is not recognized, return an error
+        return res.status(409).json({ errorMessage: `Logger '${name}' not found` });
     }
+    res.status(200).json({ result: level });
 };

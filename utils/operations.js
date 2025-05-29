@@ -74,7 +74,8 @@ function perform(op, args) {
 
     try {
         return entry.fn(...args);
-    } catch (error) {
+    }
+    catch (error) {
         throw error;
     }
 }

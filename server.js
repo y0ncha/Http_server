@@ -46,7 +46,7 @@ app.use('/calculator', independentRoutes);
  * @see ./routes/general
  */
 const generalRoutes = require('./routes/general');
-app.use('/calculator', generalRoutes);
+app.use(generalRoutes);
 
 
 /****** INIT SERVER ******/

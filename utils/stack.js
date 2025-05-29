@@ -54,11 +54,11 @@ class Stack {
     }
 
     /**
-     * @description Gets the current items in the stack as a string
+     * @description Gets the current items in the stack as a string (first item is the top)
      * @returns {string} Array of items in the stack
      */
     stringify() {
-        return `${this._items.join(', ')}`;
+        return `${this._items.slice().reverse().join(', ')}`;
     }
 
     /**

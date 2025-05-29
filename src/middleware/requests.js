@@ -1,10 +1,10 @@
 /**
  * @module request
- * @description Logs incoming requests and their durations (info + DEBUG)
+ * @description Logs incoming requests and their durations (INFO + DEBUG)
  * @requires loggers
  */
 
-const { requestLogger: logger } = require('../loggers');
+const { requestLogger, stackLogger, independentLogger } = require('../loggers');
 
 let reqCount = 1;
 
@@ -17,15 +17,20 @@ function logReq(req, res, next) {
     req.id = reqId;
     const start = Date.now();
 
-    // This message appears for each incoming request, and before it is processed
-    logger.info(
-        `Incoming request | #${reqId} | resource: ${req.path} | HTTP Verb ${req.method.toUpperCase()} | request #${reqId} `
+    // Set context for the logger so the layout picks up the requestId
+    requestLogger.addContext('requestId', reqId);
+    stackLogger.addContext('requestId', reqId);
+    independentLogger.addContext('requestId', reqId);
+
+    // Log INFO before request is handled
+    requestLogger.info(
+        `Incoming request | #${reqId} | resource: ${req.path} | HTTP Verb ${req.method.toUpperCase()}`
     );
 
-    // This message appears after the request ends (as it measures its time)
+    // Log DEBUG when request ends
     res.on('finish', () => {
         const duration = Date.now() - start;
-        logger.debug(`request #${reqId} duration: ${duration}ms | request #${reqId} `);
+        requestLogger.debug(`request #${reqId} duration: ${duration}ms`);
     });
 
     next();

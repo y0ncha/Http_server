@@ -16,33 +16,34 @@ if (!fs.existsSync(logsDir)) {
     fs.mkdirSync(logsDir);
 }
 
-// Define '{date-time} {log-level}:' layout
-const layout = {
+const logLayout = {
     type: 'pattern',
-    pattern: '%d{dd-MM-yyyy HH:mm:ss.SSS} %p: %m'
-}
-
+    pattern: '%d{dd-MM-yyyy hh:mm:ss.SSS} %p: %m | request #%X{requestId} '
+};
 // Configure log4js with multiple appenders and logger categories
 loggers.configure({
     appenders: {
         request: {
             type: 'file',
             filename: 'logs/requests.log',
-            layout: layout
+            layout: logLayout,
+            flags: 'w'
         },
         stack: {
             type: 'file',
             filename: 'logs/stack.log',
-            layout: layout
+            layout: logLayout,
+            flags: 'w'
         },
         independent: {
             type: 'file',
             filename: 'logs/independent.log',
-            layout: layout
+            layout: logLayout,
+            flags: 'w'
         },
         console: {
             type: 'console',
-            layout: layout,
+            layout: logLayout
         }
     },
     categories: {

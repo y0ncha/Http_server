@@ -27,17 +27,17 @@ exports.fetchHistory = (req, res) => {
         let result = [];
 
         if (flavor === 'STACK') {
-            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions | request #${req.id} `);
+            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions`);
             result = stackHistory.fetch();
         }
         else if (flavor === 'INDEPENDENT') {
-            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions | request #${req.id} `);
+            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions`);
             result = independentHistory.fetch();
         }
         else if (!flavor) {
             result = [...stackHistory.fetch(), ...independentHistory.fetch()];
-            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions | request #${req.id} `);
-            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions | request #${req.id} `);
+            stackLogger.info(`History: So far total ${stackHistory.length()} stack actions`);
+            independentLogger.info(`History: So far total ${independentHistory.length()} independent actions`);
         }
         else {
             return res.status(409).json({ errorMessage: `Error: unknown flavor: ${flavor}` }); // no need to log this

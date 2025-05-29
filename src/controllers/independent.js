@@ -23,31 +23,31 @@ exports.independentCalculate = (req, res) => {
 
         if (!opEntry) { // check if operation exists
             const error = `Error: unknown operation: ${op}`;
-            logger.error(`Server encountered an error ! message: ${error} | request #${req.id} `);
+            logger.error(`Server encountered an error ! message: ${error}`);
             return res.status(409).json({ errorMessage: error});
         }
         if (args.length < opEntry.arity) { // check if enough arguments are provided
             const error = `Error: Not enough arguments to perform the operation ${op}`;
-            logger.error(`Server encountered an error ! message: ${error} | request #${req.id} `);
+            logger.error(`Server encountered an error ! message: ${error}`);
             return res.status(409).json({ errorMessage: `Error: Not enough arguments to perform the operation ${op}` });
         }
         if (args.length > opEntry.arity) { // check if too many arguments are provided
             const error = `Error: Too many arguments to perform the operation ${op}`;
-            logger.error(`Server encountered an error ! message: ${error} | request #${req.id} `);
+            logger.error(`Server encountered an error ! message: ${error}`);
             return res.status(409).json({ errorMessage: error });
         }
 
         const result = operations.perform(opKey, args);
         history.addAction(op, args, result);
 
-        logger.info(`Performing operation ${op}. Result is ${result} | request #${req.id} `);
+        logger.info(`Performing operation ${op}. Result is ${result}`);
         res.status(200).json({ result });
 
-        logger.debug(`Performing operation: ${op}(${args.join(',')}) = ${result} | request #${req.id} `);
+        logger.debug(`Performing operation: ${op}(${args.join(',')}) = ${result}`);
 
     }
     catch (error) {
-        logger.error(`Server encountered an error ! message: ${error} | request #${req.id} `);
+        logger.error(`Server encountered an error ! message: ${error}`);
         res.status(409).json({ errorMessage: error });
     }
 };

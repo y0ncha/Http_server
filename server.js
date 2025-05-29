@@ -6,7 +6,7 @@
 
 /****** IMPORTS ******/
 const express = require('express');
-const logReq = require('./middleware/requests'); // Middleware to log requests
+const logReq = require('./src/middleware/requests'); // Middleware to log requests
 
 
 /****** CONFIG ******/
@@ -25,7 +25,7 @@ app.use(logReq); // Middleware to log requests
  * @requires ./routes/stack
  * @see ./routes/stack
  */
-const stackRoutes = require('./routes/stack');
+const stackRoutes = require('./src/routes/stack');
 app.use('/calculator', stackRoutes);
 
 /**
@@ -35,7 +35,7 @@ app.use('/calculator', stackRoutes);
  * @requires ./routes/independent
  * @see ./routes/independent
  */
-const independentRoutes = require('./routes/independent');
+const independentRoutes = require('./src/routes/independent');
 app.use('/calculator', independentRoutes);
 
 /**
@@ -45,7 +45,7 @@ app.use('/calculator', independentRoutes);
  * @requires ./routes/general
  * @see ./routes/general
  */
-const generalRoutes = require('./routes/general');
+const generalRoutes = require('./src/routes/general');
 app.use(generalRoutes);
 
 

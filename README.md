@@ -1,7 +1,8 @@
-# HTTP Server
+# calculator-api
 
 ## Description
-This project implements a simple HTTP server using Node.js and Express. It provides endpoints for performing stack operations (push, pop, peek) and independent operations (add, subtract, multiply, divide) with logging capabilities. The server also supports history tracking for both stack and independent operations.
+This project implements a RESTful API using Node.js and Express to support both stack-based and independent arithmetic operations. The API provides endpoints for manipulating a stack (e.g., push, pop, peek) and for performing standalone calculations (e.g., addition, subtraction).
+It includes detailed request logging with Log4js, assigns a unique identifier to each request, and tracks operation history for both modes. Clients can retrieve or clear history, check the server’s health, and dynamically manage logger levels through dedicated endpoints.
 
 ## Features
 - Handles HTTP requests and responses
@@ -13,10 +14,10 @@ This project implements a simple HTTP server using Node.js and Express. It provi
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/y0ncha/http_server.git
+   git clone https://github.com/y0ncha/calculator-api.git
 2. Navigate to the project directory:
    ```bash
-   cd http_server
+   cd calculator-api
    ```
 3. Install dependencies:
    ```bash

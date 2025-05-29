@@ -28,20 +28,17 @@ loggers.configure({
         request: {
             type: 'file',
             filename: 'logs/requests.log',
-            layout: layout,
-            flags: 'w'
+            layout: layout
         },
         stack: {
             type: 'file',
             filename: 'logs/stack.log',
-            layout: layout,
-            flags: 'w'
+            layout: layout
         },
         independent: {
             type: 'file',
             filename: 'logs/independent.log',
-            layout: layout,
-            flags: 'w'
+            layout: layout
         },
         console: {
             type: 'console',

@@ -41,6 +41,7 @@ You can run the API directly using the pre-built image on Docker Hub.
    ```bash
    docker pull y0ncha/calc-api:1.0
    docker run --name app -d -p 4785:8496 y0ncha/calc-api:1.0
+   ```
 
 3.	Access the API at:
    http://localhost:4785

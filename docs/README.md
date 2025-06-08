@@ -15,19 +15,19 @@ It includes detailed request logging with Log4js, assigns a unique identifier to
 ## Installation (Local)
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/y0ncha/calculator-api.git
-   ```
+      ```bash
+      git clone https://github.com/y0ncha/calculator-api.git
+      ```
 
 2.	Navigate to the project directory:
-   ```bash
-   cd calculator-api
-   ```
+      ```bash
+      cd calculator-api
+      ```
 
 3.	Install dependencies:
-   ```bash
-   npm start
-   ```
+      ```bash
+      npm start
+      ```
 
 ## Running with Docker
 

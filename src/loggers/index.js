@@ -10,16 +10,19 @@ const loggers = require('log4js');
 const fs = require('fs');
 const path = require('path');
 
-// Ensure the logs directory exists
-const logsDir = path.join(__dirname, '../logs');
+
+// Create logs/ in the working directory (process.cwd())
+const logsDir = path.join(process.cwd(), 'logs');
 if (!fs.existsSync(logsDir)) {
-    fs.mkdirSync(logsDir);
+    fs.mkdirSync(logsDir, { recursive: true });
 }
 
+// Define a common log layout for all loggers
 const logLayout = {
     type: 'pattern',
     pattern: '%d{dd-MM-yyyy hh:mm:ss.SSS} %p: %m | request #%X{requestId} '
 };
+
 // Configure log4js with multiple appenders and logger categories
 loggers.configure({
     appenders: {

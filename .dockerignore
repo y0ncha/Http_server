@@ -1,10 +1,21 @@
+# Node modules and environment
 node_modules
-logs
 .env
+
+# Build and runtime artifacts
+logs
+run.bat
+
+# Git and IDE files
 .git
 .gitignore
+.idea
+
+# Docker-specific
 Dockerfile
 .dockerignore
+
+# Tests and documentation
 docs
 tests
 *.test.js

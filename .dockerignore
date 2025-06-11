@@ -5,6 +5,6 @@ logs
 .gitignore
 Dockerfile
 .dockerignore
-README.md
+docs
 tests
 *.test.js
